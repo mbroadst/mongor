@@ -1,0 +1,30 @@
+static_resources:
+  listeners:
+  - name: mongor_listener
+    address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 27017
+    filter_chains:
+    - filters:
+      - name: mongor
+        typed_config:
+  clusters:
+  - name: mongor_cluster
+    connect_timeout: 0.25s
+    load_assignment:
+      cluster_name: mongor_cluster
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 127.0.0.1
+                port_value: 27017
+admin:
+  access_log_path: "/dev/null"
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 8001
+
